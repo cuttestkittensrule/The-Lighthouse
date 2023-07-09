@@ -1,5 +1,12 @@
 title: OpeningSequence
 ---
+// ---- Completion trackers ----
+<<set $fisherComplete to false>>
+<<set $electricianComplete to false>>
+<<set $constructionComplete to false>>
+<<set $glassblowerComplete to false>>
+
+
 <<set $fishermanTalked = false>>
 <<set $electricianTalked = false>>
 <<set $constructionWorkerTalked = false>>
@@ -43,9 +50,8 @@ title: lose
 You lost.
 -> Exit the game
 	// Exit the game
--> Reload your last save
-	// Reload your last save
-===
+-> Restart the game
+	// Restart the game
 title: look
 ---
 //lighthouse keeper turns slowly and camera pans out to remains of ruined lighthouse
@@ -64,12 +70,10 @@ title: prideful
 You attempt to fix the lighthouse on your own, but you realize that you lack the materials and skills necessary to fix the lighthouse.
 -> Go to town
 	<<jump town>>
+-> Give up
+	<<jump lose>>
 ===
-title: town
----
-//Scene change to the town, where the fisherman, construction worker, electrician, and glassblower are there to talk to
-Lighthouse Keeper: Wow I haven't been here in a while... who should I talk to?
-===
+
 title: fisherman
 ---
 <<if $fishermanTalked==false>>
@@ -92,14 +96,14 @@ Fisherman: Sure! I'll go find it, be back in a couple hours!
 Fisherman: Hope you've found more people to help you fix the lighthouse!
 <<endif>>
 ===
-title: found light
+title: foundLight
 ---
 Fisherman: Hey! I'm back! I found the light, but I'm afraid I have no idea how to reattatch it and get the light functioning again
 	<<set $light += 1>>
 Lighthouse Keeper: Neither do I, but thanks for helping me!
-	<<jump town returning>>
+	<<jump townReturning>>
 ===
-title: town returning
+title: townReturning
 ---
 <<else>>
 	Lighthouse Keeper: Who should I talk to next?
@@ -143,7 +147,7 @@ Lighthouse Keeper: Thanks for appreciating my hard work! I appreciate you too! T
 Electrician: Anytime! See you around!
 <<jump town returning>>
 ===
-title: construction worker
+title: constructionWorker
 ---
 Construction Worker: Do you need something?
 Lighthouse Keeper: I was hoping you could help me fix the lighthouse, last night's storm wrecked a lot of it.
@@ -163,7 +167,7 @@ Construction Worker: A lot of the supplies I use is imported in... We need to ge
 -> Have the contruction worker get ice cream first
 	<<jump ice cream>>
 ===
-title: ice cream
+title: iceCream
 ---
 Construction Worker: Thanks for inviting me for ice cream! It's been awhile since anyone around here did something like that for me.
 Lighthouse Keeper: That's awful, why don't people want to spend time with you?

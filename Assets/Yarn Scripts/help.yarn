@@ -1,0 +1,16 @@
+title: fisherHelp
+tracking: never
+---
+Lighthouse Keeper: The lighthouse has broken in the storm and I don't know how to fix it, can you help me?
+Fisherman: If that lighthouse is broken then the shipments of bait won't arrive! I'll help as much as I can.
+//scene
+Fisherman: Wow... That storm certainly did something
+Fisherman: Wait... Where's the actual light?
+Lighthouse Keeper: I heard a huge splash last night, and I have a sinking feeling the light may have fallen into the ocean.
+Fisherman: Haha sinking.
+Fisherman: Sorry, I don't mean to make anenome out of you by making light of this situation!
+Lighthouse Keeper: You're funny but can we please figure out how to fix this?
+Lighthouse Keeper: Maybe you could use your boat to find the missing light?
+Fisherman: Sure! I'll go find it, be back in a couple hours!
+<<jump findLight>>
+===

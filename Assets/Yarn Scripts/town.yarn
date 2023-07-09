@@ -1,0 +1,40 @@
+title: town
+tracking: never
+---
+//Scene change to the town, where the fisherman, construction worker, electrician, and glassblower are there to talk to
+Lighthouse Keeper: Wow I haven't been here in a while... who should I talk to?
+===
+title: fisherman
+tracking: always
+---
+<<if not <<visited>>>>
+	Fisherman: hm?
+	-> Lighthouse Keeper: I want to ask for your help
+		<<jump fisherHelp>>
+	-> Lighthouse Keeper: Nevermind
+		Fisherman: If you want my help later, just ask.
+<<elif>>
+<<else>>
+	Fisherman: Hope you've found more people to help you fix the lighthouse!
+<<endif>>
+===
+title: foundLight
+tracking: always
+---
+<<if not <<visited>>>>
+	Fisherman: Hey! I'm back! I found the light, but I'm afraid I have no idea how to reattatch it and get the light functioning again
+	Lighthouse Keeper: Neither do I, but thanks for helping me!
+	<<set $fisherComplete to true>>
+	<<jump townReturning>>
+<<endif>>
+<<jump townReturning>>
+===
+title: townReturning
+tracking: never
+---
+<<if $fisherComplete && $electricianComplete && $constructionComplete && $glassblowerComplete>>
+	<<jump end>>
+<<else>>
+	Lighthouse Keeper: Who should I talk to next?
+<<endif>>
+===
