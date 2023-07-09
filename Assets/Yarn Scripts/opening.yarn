@@ -1,0 +1,48 @@
+title: OpeningSequence
+---
+//screen is black except for the text
+There once was a lighthouse keeper living by the water, managing his lighthouse.
+For years he woke up every day at sunrise to turn off the lighthouse, and every night he switched it
+on the moment the skies went dark. While the lighthouse keeper slept, his lighthouse guided the 
+mainland ships to their tiny island to deliver the necessary goods for the town. And this worked 
+out fine for him, until one day--
+<<FadeIn>>
+//storm and crasing noises, then screen slowly brightens
+Lighthouse Keeper: Ugh... another day, another early morning for me. 
+Lighthouse Keeper: Wait... where did all this rubble come from?
+Lighthouse Keeper: Should I take a look?
+/// Lazyness counter
+<<set $lazyness = 0>>
+-> Yes, I Should
+	<<jump look>>
+-> No, I want to stay inside for a while
+	<<set $lazyness += 1>>
+	<<jump lazy>>
+===
+title: lazy
+---
+<<if $lazyness >= 3>>
+You stayed up too long and rubble blocked your door, and you died of starvation
+<<jump lose>>
+<<endif>>
+Lighthouse Keeper: I am seeing alot of rubble, I need to go do my job and check on it
+-> Check the rubble
+	<<jump look>>
+-> Stay inside for longer
+	<<set $lazyness += 1>>	
+	<<jump lazy>>
+===
+title: lose
+---
+You lost
+-> Exit the game
+	// Exit the game
+-> Reload your last save
+	// Reload your last save
+===
+title: look
+---
+//lighthouse keeper turns slowly and camera pans out to remains of ruined lighthouse
+Lighthouse Keeper: Oh no... what happened to my lighthouse?
+Lighthouse Keeper: What do I do? I don't know how to fix this... maybe someone from town can help?
+===
