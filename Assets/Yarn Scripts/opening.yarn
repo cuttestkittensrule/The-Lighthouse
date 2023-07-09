@@ -1,5 +1,11 @@
 title: OpeningSequence
 ---
+<<set $fishermanTalked = false>>
+<<set $electricianTalked = false>>
+<<set $constructionWorkerTalked = false>>
+<<set $glassblowerTalked = false>>
+<<set $gold_pieces = 0>>
+//interacting with something in the house should give gold!
 //screen is black except for the text
 There once was a lighthouse keeper living by the water, managing his lighthouse.
 For years he woke up every day at sunrise to turn off the lighthouse, and every night he switched it
@@ -7,12 +13,12 @@ on the moment the skies went dark. While the lighthouse keeper slept, his lighth
 mainland ships to their tiny island to deliver the necessary goods for the town. And this worked 
 out fine for him, until one day--
 <<FadeIn>>
-//storm and crasing noises, then screen slowly brightens
+//storm and crashing noises, then screen slowly brightens
 Lighthouse Keeper: Ugh... another day, another early morning for me. 
 Lighthouse Keeper: Wait... where did all this rubble come from?
 Lighthouse Keeper: Should I take a look?
-/// Lazyness counter
-<<set $lazyness = 0>>
+/// Laziness counter
+<<set $laziness = 0>>
 -> Yes, I Should
 	<<jump look>>
 -> No, I want to stay inside for a while
@@ -21,11 +27,11 @@ Lighthouse Keeper: Should I take a look?
 ===
 title: lazy
 ---
-<<if $lazyness >= 3>>
-You stayed up too long and rubble blocked your door, and you died of starvation
+<<if $laziness >= 3>>
+You stayed up too long and rubble blocked your door, and you died of starvation.
 <<jump lose>>
 <<endif>>
-Lighthouse Keeper: I am seeing alot of rubble, I need to go do my job and check on it
+Lighthouse Keeper: I am seeing alot of rubble, I need to go do my job and check on it.
 -> Check the rubble
 	<<jump look>>
 -> Stay inside for longer
@@ -34,7 +40,7 @@ Lighthouse Keeper: I am seeing alot of rubble, I need to go do my job and check 
 ===
 title: lose
 ---
-You lost
+You lost.
 -> Exit the game
 	// Exit the game
 -> Reload your last save
@@ -44,5 +50,157 @@ title: look
 ---
 //lighthouse keeper turns slowly and camera pans out to remains of ruined lighthouse
 Lighthouse Keeper: Oh no... what happened to my lighthouse?
+Lighthouse Keeper: Without the lighthouse, nothing can be imported! This lighthouse helps sailors find us at night, when most imports happen!
+Lighthouse Keeper: And there's a huge import coming tonight! I need to fix this fast!
 Lighthouse Keeper: What do I do? I don't know how to fix this... maybe someone from town can help?
+	<<set $light = 0>>
+-> Go to town
+	<<jump town>>
+-> Try to fix it on your own
+	<<jump prideful>>
 ===
+title: prideful
+---
+You attempt to fix the lighthouse on your own, but you realize that you lack the materials and skills necessary to fix the lighthouse.
+-> Go to town
+	<<jump town>>
+===
+title: town
+---
+//Scene change to the town, where the fisherman, construction worker, electrician, and glassblower are there to talk to
+Lighthouse Keeper: Wow I haven't been here in a while... who should I talk to?
+===
+title: fisherman
+---
+<<if $fishermanTalked==false>>
+Fisherman: hm?
+Lighthouse Keeper: The lighthouse has broken in the storm and I don't know how to fix it, can you help me?
+Fisherman: If that lighthouse is broken then the shipments of bait won't arrive! I'll help as much as I can.
+//scene
+Fisherman: Wow... That storm certainly did something
+Fisherman: Wait... Where's the actual light?
+Lighthouse Keeper: I heard a huge splash last night, and I have a sinking feeling the light may have fallen into the ocean.
+Fisherman: Haha sinking.
+Fisherman: Sorry, I don't mean to make anenome out of you by making light of this situation!
+Lighthouse Keeper: You're funny but can we please figure out how to fix this?
+Lighthouse Keeper: Maybe you could use your boat to find the missing light?
+Fisherman: Sure! I'll go find it, be back in a couple hours!
+<<FadeIn>>
+<<FadeOut>>
+<<jump found light>>
+<<if $fishermanTalked==true>>
+Fisherman: Hope you've found more people to help you fix the lighthouse!
+<<endif>>
+===
+title: found light
+---
+Fisherman: Hey! I'm back! I found the light, but I'm afraid I have no idea how to reattatch it and get the light functioning again
+	<<set $light += 1>>
+Lighthouse Keeper: Neither do I, but thanks for helping me!
+	<<jump town returning>>
+===
+title: town returning
+---
+<<else>>
+	Lighthouse Keeper: Who should I talk to next?
+<<if fishermanTalked==true && constructionWorkerTalked == true && electricianTalked == true && glassblowerTalked == true>>
+	The whole town stares in newfound admiration at the fixed lighthouse
+	Glassblower: I can't believe I walked past this every day without noticing its beauty and importance.
+	Electrician: It never seemed too important until it was gone .
+	Fisherman: I think we should be more appreciative of everyone around us. It was a collaberative effort to fix the lighthouse, and everyone who helped was important.
+	Construction Worker: We should all appreciate the role all of us play to make this town function. No matter how small our roles may seem, we are all important and necessary.
+	Lighthouse Keeper: Now that our lighthouse is fixed, imports can come in and we can go back to functioning regularly, just with a bit more appreciation for everyone around us!
+	//the game ends here
+
+
+===
+title: electrician
+---
+<<if electricianTalked == false>>
+	Electrician: Hello, how can I help you?
+	Lighthouse Keeper: Hi, the lighthouse was destroyed in the storm, can you help me fix it?
+	Electrician: That's not good... I'm supposed too get a shipment of new parts soon, it would be awful if the shipment got lost without the lighthouse!
+	Electrician: I can help get the light at the top of the lighthouse working again.
+		<<if $light < 1>>
+			Electrician: Wait, there isn't a light up there at all? Sorry I can't help you if the light is missing...
+			Electrician: I'm able to help once you find the missing light.
+			<<jump town returning>>
+		<<else>>
+			<<set $electricianTalked = true>>
+			Electrician: I can reconnect the light to the lighthouse and get it shining again! I'll head over there now and fix it!
+			<<jump fixedlight>>
+		<<endif>>
+<<if electricianTalked == true>>
+	Electrician: Hope you've found more people to help you fix the lighthouse!
+<<endif>>
+===
+title: fixedlight
+---
+Electrician: I was able to soure power back into the light!
+Electrician: I know us townspeople don't say it often, but thank you for taking care of this lighthouse.
+Electrician: I guess we forget the importance of your job, and that's wrong. I promise we'll do better.
+Lighthouse Keeper: Thanks for appreciating my hard work! I appreciate you too! Thanks for contributing to get this lighthouse back into its former glory.
+Electrician: Anytime! See you around!
+<<jump town returning>>
+===
+title: construction worker
+---
+Construction Worker: Do you need something?
+Lighthouse Keeper: I was hoping you could help me fix the lighthouse, last night's storm wrecked a lot of it.
+Construction Worker: That storm was intense. I can't believe it took out the lighthouse! That's a huge problem.
+Construction Worker: A lot of the supplies I use is imported in... We need to get that lighthouse fixed ASAP!!!
+-> Have the contruction worker move the rubble out of the way
+	Construction Worker: Unfortunately, I do still have to charge you for any work I do... I'm so underpaid that I can't afford to work for free.
+	-> Pay the contruction worker 10 gold pieces
+		<<if $gold_pieces < 10>>
+		Construction Worker: You don't have 10 gold pieces, sorry for all of this trouble but I have a family to feed.
+		<<else>>
+		Construction Worker: Wow, thanks! Honestly I would've worked for free if you'd gotten me ice cream. I love ice cream more than my family honestly.
+			<<jump constructioncommencing>>
+		<<endif>>
+	-> Get the construction worker ice cream first
+		<<jump ice cream>>
+-> Have the contruction worker get ice cream first
+	<<jump ice cream>>
+===
+title: ice cream
+---
+Construction Worker: Thanks for inviting me for ice cream! It's been awhile since anyone around here did something like that for me.
+Lighthouse Keeper: That's awful, why don't people want to spend time with you?
+Construction Worker: They look down on me. I sense that happens to you as well, but honestly many of the people around here don't recognize how important we are to society.
+Lighthouse Keeper: People like us are the reason society hasn't already crumbled, no one really wants to do our jobs but thatt doesn't make it less important.
+Construction Worker: I agree. Sorry for complaining, but it's hard to work such a difficult job and get little appreciation.
+Lighthouse Keeper: You have every reason to be dejected. You deserve an infinite amount of ice cream for all that you do for us.
+Construction Worker: Aw that's kind of you to say. I was going to charge you for my work, but you've been so kind I would feel bad for emptying your pockets.
+Construction Worker: Besides, I want that lighthouse running so that I can continue doing my important job.
+	<<jump constructioncommencing>>
+===
+title: constructioncommencing
+---
+Construction Worker: I'll get right to removing that rubble and repairing the walls!
+<<FadeOut>>
+<<FadeIn>>
+Construction Worker: Sorry that took awhile, but I've done what I can! 
+	<<jump town returning>>
+===
+title: glassblower
+---
+<<if glassblowerTalked==false>>
+	Glassblower: Hey, what's up?
+	Lighthouse Keeper: Sorry to bother you, but I need help. Last night's storm broke the lighthouse and I need help.
+	Glassblower: That's not good. How will the sand be imported so that I can continue making glass? 
+	Glassblower: The people importing goods won't be able to find us without the lighthouse providing a beacon of light.
+	Glassblower: I can't just go to the beach to get my supplies of sand! The only sand usable for glassmaking is sand with above 95% silica!
+	Glassblower: Most sand deposites aren't sufficient for glassblowing! I need those imports to be able to continue buisness!
+	Lighthouse Keeper: The glass surrounding the area where the light sits completely shattered, would you maybe be able to help?
+	Glassblower: Of course! Give me some time I'll put more glass there as fast as I can.
+	<<FadeOut>>
+	<<FadeIn>>
+	<<glassblowerTalked=true>>
+	Glassblower: Hey I finished fixing the glass! I'm glad to have helped bring the lighthouse back!
+	Lighthouse Keeper: Thank you for helping! Artisans are often overlooked but I know that the work you put in makes a huge difference.
+	Glassblower: I appreciate you saying that!
+	<<jump town returning>>
+<<if glassblowerTalked==true>>
+	Glassblower: Hope you've found more people to help you fix the lighthouse!
+<<endif>>
