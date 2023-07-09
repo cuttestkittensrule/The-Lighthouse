@@ -13,28 +13,84 @@ tracking: always
 		<<jump fisherHelp>>
 	-> Lighthouse Keeper: Nevermind
 		Fisherman: If you want my help later, just ask.
-<<elif>>
+<<elseif not $fisherComplete>>
+	Fisherman: Do you need my help?
+	-> Lighthouse Keeper: Yeah, I do.
+		<<jump fisherHelp>>
+	-> Lighthouse Keeper: No, I don't currently.
+		Fisherman: If you need my help later, all you need to do is ask.
 <<else>>
 	Fisherman: Hope you've found more people to help you fix the lighthouse!
 <<endif>>
 ===
-title: foundLight
+title: electrician
 tracking: always
 ---
 <<if not <<visited>>>>
-	Fisherman: Hey! I'm back! I found the light, but I'm afraid I have no idea how to reattatch it and get the light functioning again
-	Lighthouse Keeper: Neither do I, but thanks for helping me!
-	<<set $fisherComplete to true>>
-	<<jump townReturning>>
+	Electrician: Hello, how can I help you?
+	-> Lighthouse Keeper: Could you reconnect this light to the lighthouse? <<if $fisherComplete>>
+		<<jump electricianHelp>>
+	-> Lighthouse Keeper: Nothing right now. If I need your help, I will come back later
+		Electrician: When you are ready for my help, please don't hesitate to ask.
+<<elseif not $electricianComplete>>
+	Electrician: Hello again! How can I help you?
+	-> Lighthouse Keeper: Could you reconnect this light to the lighthouse? <<if $fisherComplete>>
+		<<jump electricianHelp>>
+	-> Lighthouse Keeper: Still don't need your help, though I will probably come back later.
+		Electrician: When you are ready for my help, please don't hesitate to ask.
+<<else>>
+	Electrician: Hope you've found more people to help you fix the lighthouse!
 <<endif>>
-<<jump townReturning>>
+===
+title: constructionWorker
+tracking: always
+---
+<<if not <<visited>>>>
+	Construction Worker: Do you need something?
+	-> Lighthouse Keeper: I was hoping you could help me fix the lighthouse, last night's storm wrecked a lot of it.
+		<<jump constructionHelp>>
+	-> Lighthouse Keeper: Not Right now, I might later though.
+<<elseif not $constructionComplete>>
+	Construction Worker: Do you need anything now?
+	-> Lighthouse Keeper: I was hoping you could help me fix the lighthouse, last night's storm wrecked a lot of it.
+		<<jump constructionHelp>>
+	-> Lighthouse Keeper: Not Right now, I might later though.
+<<else>>
+	Construction Worker: Good luck on fixing up the lighthouse!
+<<endif>>
+===
+title: glassblower
+---
+<<if not <<visited>>>>
+	Glassblower: Hey, what's up?
+	-> Lighthouse Keeper: Sorry to bother you, but I need help. Last night's storm broke the lighthouse and I need help.
+		<<jump glassblowerHelp>>
+	-> Lighthouse Keeper: Nothing right now.
+		Talk to you later!
+<<elseif not $glassblowerComplete>>
+	Glassblower: Hey, anything new to talk about?
+	-> Lighthouse Keeper: Sorry to bother you, but I need help. Last night's storm broke the lighthouse and I need help.
+		<<jump glassblowerHelp>>
+	-> Lighthouse Keeper: Nothing right now.
+		Next time you come, come to talk about something!
+<<else>>
+	Glassblower: Hope you've found more people to help you fix the lighthouse!
+<<endif>>
 ===
 title: townReturning
 tracking: never
 ---
 <<if $fisherComplete && $electricianComplete && $constructionComplete && $glassblowerComplete>>
 	<<jump end>>
-<<else>>
-	Lighthouse Keeper: Who should I talk to next?
 <<endif>>
+===
+title: end
+tracking: never
+---
+The whole town stares in newfound admiration at the fixed lighthouse
+	Glassblower: I can't believe I walked past this every day without noticing its beauty and importance.
+	Electrician: It never seemed too important until it was gone .
+	Fisherman: I think we should be more appreciative of everyone around us. It was a collaberative effort to fix the lighthouse, and everyone who helped was important.
+	Construction Worker: We should all appreciate the role all of us play to make this town function. No matter how small our roles may seem, we are all important and necessary.
+	Lighthouse Keeper: Now that our lighthouse is fixed, imports can come in and we can go back to functioning regularly, just with a bit more appreciation for everyone around us!
 ===

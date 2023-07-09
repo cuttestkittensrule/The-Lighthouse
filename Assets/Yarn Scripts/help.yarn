@@ -12,5 +12,83 @@ Fisherman: Sorry, I don't mean to make anenome out of you by making light of thi
 Lighthouse Keeper: You're funny but can we please figure out how to fix this?
 Lighthouse Keeper: Maybe you could use your boat to find the missing light?
 Fisherman: Sure! I'll go find it, be back in a couple hours!
-<<jump findLight>>
+// Waiting?
+Fisherman: Hey! I'm back! I found the light, but I'm afraid I have no idea how to reattatch it and get the light functioning again
+Lighthouse Keeper: Neither do I, but thanks for helping me!
+<<set $fisherComplete to true>>
+<<jump townReturning>>
 ===
+title: electricianHelp
+tracking: never
+---
+Electrician: That's not good... I'm supposed too get a shipment of new parts soon, it would be awful if the shipment got lost without the lighthouse!
+Electrician: I can help get the light at the top of the lighthouse working again.
+// Waiting?
+Electrician: I was able to soure power back into the light!
+Electrician: I know us townspeople don't say it often, but thank you for taking care of this lighthouse.
+Electrician: I guess we forget the importance of your job, and that's wrong. I promise we'll do better.
+Lighthouse Keeper: Thanks for appreciating my hard work! I appreciate you too! Thanks for contributing to get this lighthouse back into its former glory.
+Electrician: Anytime! See you around!
+<<set $electricianComplete to true>>
+<<jump townReturning>>
+===
+title: constructionHelp
+tracking: never
+---
+Construction Worker: That storm was intense. I can't believe it took out the lighthouse! That's a huge problem.
+Construction Worker: A lot of the supplies I use is imported in... We need to get that lighthouse fixed ASAP!!!
+Lighthouse Keeper: Could you move the rubble away?
+Construction Worker: I could, but I am underpaid, and I need to make money somehow, so I will do it for 10 gold pieces.
+-> Lighthouse Keeper: I will pay you 10 gold pieces <<if $gold_pieces >= 10>>
+	<<set $gold_pieces -= 10>>
+	<<jump constructioncommencing>>
+-> Lighthouse Keeper: How about I take you out for ice cream? <<if $gold_pieces >= 4 && $discoveredIceCream>>
+	<<set $gold_pieces -= 4>>
+	<<jump iceCream>>
+-> Lighthouse Keeper: Unfortunately, I don't have enough gold to pay for this <<if $gold_pieces < 10>>
+	Construction Worker: Tough luck! Though, I am craving something sweet right now...
+	Lighthouse Keeper: Like ice cream?
+	Construction Worker: Yeah, that would be wonderfull. Unfortunately, that costs 2 gold pieces per ice cream...
+	Lighthouse Keeper: See you later!
+	Construction Worker: See ya.
+	<<set $discoveredIceCream to true>>
+===
+title: iceCream
+tracking: never
+---
+Construction Worker: Thanks for inviting me for ice cream! It's been awhile since anyone around here did something like that for me.
+Lighthouse Keeper: That's awful, why don't people want to spend time with you?
+Construction Worker: They look down on me. I sense that happens to you as well, but honestly many of the people around here don't recognize how important we are to society.
+Lighthouse Keeper: People like us are the reason society hasn't already crumbled, no one really wants to do our jobs but thatt doesn't make it less important.
+Construction Worker: I agree. Sorry for complaining, but it's hard to work such a difficult job and get little appreciation.
+Lighthouse Keeper: You have every reason to be dejected. You deserve an infinite amount of ice cream for all that you do for us.
+Construction Worker: Aw that's kind of you to say. I was going to charge you for my work, but you've been so kind I would feel bad for emptying your pockets.
+Construction Worker: Besides, I want that lighthouse running so that I can continue doing my important job.
+<<jump constructioncommencing>>
+===
+title: constructioncommencing
+---
+Construction Worker: I'll get right to removing that rubble and repairing the walls!
+<<FadeOut>>
+// Waiting?
+<<FadeIn>>
+Construction Worker: Sorry that took awhile, but I've done what I can! 
+<<jump town returning>>
+===
+title: glassblowerHelp
+tracking: never;
+---
+Glassblower: That's not good. How will the sand be imported so that I can continue making glass? 
+Glassblower: The people importing goods won't be able to find us without the lighthouse providing a beacon of light.
+Glassblower: I can't just go to the beach to get my supplies of sand! The only sand usable for glassmaking is sand with above 95% silica!
+Glassblower: Most sand deposites aren't sufficient for glassblowing! I need those imports to be able to continue buisness!
+Lighthouse Keeper: The glass surrounding the area where the light sits completely shattered, would you maybe be able to help?
+Glassblower: Of course! Give me some time I'll put more glass there as fast as I can.
+<<FadeOut>>
+// Waiting?
+<<FadeIn>>
+<<set $glassblowerComplete to true>>
+Glassblower: Hey I finished fixing the glass! I'm glad to have helped bring the lighthouse back!
+Lighthouse Keeper: Thank you for helping! Artisans are often overlooked but I know that the work you put in makes a huge difference.
+Glassblower: I appreciate you saying that!
+<<jump town returning>>
