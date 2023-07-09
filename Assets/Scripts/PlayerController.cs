@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     }
     [YarnCommand("FadeIn")]
     public static void yrnFadeIn() {
-        GameObject obj = GameObject.FindGameObjectWithTag("Cover");
+        GameObject obj = GameObject.FindGameObjectsWithTag("Cover")[0];
         Thread t = new(new ThreadStart(() => { FadeIn(obj); }));
         t.Start();
     }
